@@ -8,18 +8,18 @@ class PokemonRepositoryImpl(
     private val api: PokemonApiService
 ) : PokemonRepository {
 
-    // ✅ La función va AQUÍ, dentro de la clase, no en el constructor
+    // La función va AQUÍ, dentro de la clase, no en el constructor
     override suspend fun getPokemon(): List<Pokemon> {
         // Primero obtenemos la lista básica
         val response = api.getPokemonList()
-        println("📦 Response: ${response.results.size} items") //
+        println("Response: ${response.results.size} items")
 
         val pokemonList = mutableListOf<Pokemon>()
 
         for (pokemonDto in response.results) {
             try {
                 val detail = api.getPokemonDetail(pokemonDto.name)
-                println("✅ Detail: ${detail.name}") // 👈 y esto
+                println("Detail: ${detail.name}")
                 val pokemon = Pokemon(
                     id = detail.id,
                     name = detail.name,
@@ -30,7 +30,7 @@ class PokemonRepositoryImpl(
                 )
                 pokemonList.add(pokemon)
             } catch (e: Exception) {
-                println("❌ Error en ${pokemonDto.name}: ${e.message}") // 👈 y esto
+                println("Error en ${pokemonDto.name}: ${e.message}")
             }
         }
 

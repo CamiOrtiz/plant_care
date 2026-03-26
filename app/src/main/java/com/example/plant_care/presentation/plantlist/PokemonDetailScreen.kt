@@ -1,6 +1,7 @@
 package com.example.plant_care.presentation.plantlist
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,14 +27,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.plant_care.domain.model.Pokemon
-import com.example.plant_care.presentation.theme.typeColor
-import okhttp3.internal.wait
+import com.example.plant_care.presentation.plantlist.theme.typeColor
 
 @Composable
 fun PokemonDetailScreen(pokemon: Pokemon, onBack: () -> Unit) {
@@ -62,7 +61,7 @@ fun PokemonDetailScreen(pokemon: Pokemon, onBack: () -> Unit) {
             Text(
                 text = "#${pokemon.id.toString().padStart(3, '0')}",
                 color = Color.White.copy(alpha = 0.9f),
-                fontSize = 13.sp,
+                fontSize = 24.sp,
                 modifier = Modifier.align(Alignment.TopEnd)
             )
 
@@ -70,9 +69,9 @@ fun PokemonDetailScreen(pokemon: Pokemon, onBack: () -> Unit) {
                 model = pokemon.spriteUrl,
                 contentDescription = pokemon.name,
                 modifier = Modifier
-                    .size(150.dp)
+                    .size(250.dp)
                     .align(Alignment.BottomCenter)
-                    .padding(top = 32.dp)
+                    .padding(top = 28.dp)
             )
         }
 
@@ -81,10 +80,13 @@ fun PokemonDetailScreen(pokemon: Pokemon, onBack: () -> Unit) {
                 .fillMaxSize()
                 .padding(20.dp)
         ) {
+            val titleColor = if (isSystemInDarkTheme()) Color.White else Color.Black
+
             Text(
                 text = pokemon.name.replaceFirstChar { it.uppercase() },
                 fontSize = 28.sp,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                color = titleColor
             )
 
             Spacer(modifier = Modifier.height(12.dp))
